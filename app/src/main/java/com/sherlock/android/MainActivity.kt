@@ -11,6 +11,8 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
@@ -108,7 +110,7 @@ class MainActivity : Activity() {
         }
         usernameInput = EditText(this).apply {
             hint = "Enter username"
-            singleLine = true
+            isSingleLine = true
             textSize = 17f
             setPadding(18, 0, 18, 0)
         }
@@ -263,9 +265,8 @@ class MainActivity : Activity() {
 
             if (method == "POST" || method == "PUT") {
                 val payload = interpolateJson(site.requestPayload, username)
-                val body = RequestBody.create(
-                    MediaType.parse("application/json; charset=utf-8"),
-                    payload?.toString() ?: "{}"
+                val body = (payload?.toString() ?: "{}").toRequestBody(
+                    "application/json; charset=utf-8".toMediaType()
                 )
                 builder.method(method, body)
             } else {
