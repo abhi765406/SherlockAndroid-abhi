@@ -15,6 +15,16 @@ android {
         versionName = "0.16.2-android.1"
     }
 
+    // Java and Kotlin must target the same JVM bytecode version.
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
